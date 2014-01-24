@@ -1,0 +1,11 @@
+[
+    { 
+        "caption": "DNA/RNA",
+        "children":
+            [
+                {"caption": "Complement", "command": "na_complement"},
+                {"caption": "Reverse Complement", "command": "na_reverse_complement"},
+                {"caption": "Reverse", "command": "na_reverse"}
+            ]
+    }
+]
