@@ -5,7 +5,9 @@
             [
                 {"caption": "Complement", "command": "na_complement"},
                 {"caption": "Reverse Complement", "command": "na_reverse_complement"},
-                {"caption": "Reverse", "command": "na_reverse"}
+                {"caption": "Reverse", "command": "na_reverse"},
+                {"caption": "-"},
+                {"caption": "Calculate Tm (defaults)", "command": "na_tm_defaults"}
             ]
     }
 ]
