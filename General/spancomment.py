@@ -44,13 +44,13 @@ class SpanCommentCommand(sublime_plugin.TextCommand):
             'SPACER': '~'
         }
     }
-    
+
     _spacers = set([v['SPACER'] for v in _LANGS.values()])
     _fdelims = set([v['F_DELIM'] for v in _LANGS.values()])
     _rdelims = set([v['R_DELIM'] for v in _LANGS.values()])
     _spacers_re = r'[{0}]*'.format('|'.join(_spacers)) 
     _fdelims_re = r'[{0}]'.format('|'.join(_fdelims)) 
-    _rdelims_re = r'[{0}]'.format('|'.join(_fdelims)) 
+    _rdelims_re = r'[{0}]?'.format('|'.join(_fdelims)) 
     _SPAN_RE = re.compile(r'\s*' + _fdelims_re + r'\s*' + _spacers_re + \
                           r'([^~]+)' + _spacers_re + r'\s*' + _rdelims_re + \
                           r'\s*')
