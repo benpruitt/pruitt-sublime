@@ -62,7 +62,8 @@ class SpanCommentCommand(sublime_plugin.TextCommand):
         pos = self.view.sel()[0].begin()
         full_line = self.view.full_line(pos)
         text = self.view.substr(full_line)
-        eol_char = re.search(SpanCommentCommand._EOL_RE, text).group(1)
+        find_eol_char = re.search(SpanCommentCommand._EOL_RE, text)
+        eol_char = find_eol_char.group(1) if find_eol_char else ''
         find_pre_ws = re.search(SpanCommentCommand._PRE_WS_RE, text)
         pre_ws = find_pre_ws.group(1) if find_pre_ws else ''
         match = re.match(SpanCommentCommand._SPAN_RE, text)
