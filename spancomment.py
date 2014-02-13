@@ -42,15 +42,20 @@ class SpanCommentCommand(sublime_plugin.TextCommand):
             'F_DELIM': '#',
             'R_DELIM': '#',
             'SPACER': '~'
+        },
+        'TEXT': {
+            'F_DELIM': '#',
+            'R_DELIM': '#',
+            'SPACER': '~'
         }
     }
 
     _spacers = set([v['SPACER'] for v in _LANGS.values()])
     _fdelims = set([v['F_DELIM'] for v in _LANGS.values()])
     _rdelims = set([v['R_DELIM'] for v in _LANGS.values()])
-    _spacers_re = r'[{0}]*'.format('|'.join(_spacers)) 
-    _fdelims_re = r'[{0}]'.format('|'.join(_fdelims)) 
-    _rdelims_re = r'[{0}]?'.format('|'.join(_fdelims)) 
+    _spacers_re = r'[{0}]*'.format('|'.join(_spacers))
+    _fdelims_re = r'[{0}]'.format('|'.join(_fdelims))
+    _rdelims_re = r'[{0}]?'.format('|'.join(_fdelims))
     _SPAN_RE = re.compile(r'\s*' + _fdelims_re + r'\s*' + _spacers_re + \
                           r'([^~]+)' + _spacers_re + r'\s*' + _rdelims_re + \
                           r'\s*')
@@ -84,17 +89,18 @@ class SpanCommentCommand(sublime_plugin.TextCommand):
             text_out = ' {0} '.format(text).center(padding, spacer)
         else:
             text_out = 75 * spacer
-        rep_text = '{0}{1} {2} {3}{4}'.format(pre_ws, fdelim, text_out, 
+        rep_text = '{0}{1} {2} {3}{4}'.format(pre_ws, fdelim, text_out,
                                               rdelim, eol_char)
         self.view.replace(edit, region, rep_text)
 
 
     def get_lang_dict(self):
         cur_syntax = self.view.settings().get('syntax')
+        print cur_syntax.upper()
         for lang, lang_dict in SpanCommentCommand._LANGS.items():
             if lang in cur_syntax.upper():
                 return lang_dict
-        return None       
+        return None
 
 
     def is_visible(self):

@@ -1,5 +1,6 @@
 [
-    { 
+    { "command": "span_comment", "caption": "Span Comment" },
+    {
         "caption": "DNA/RNA",
         "children":
             [
