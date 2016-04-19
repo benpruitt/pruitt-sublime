@@ -1,14 +1,14 @@
-from util import *
+from .util import *
 
 import sublime, sublime_plugin
 
 
 class NaBaseInPlace(NaBase):
 
-    def handle_output(self, region, seq_out):
-        edit = self.view.begin_edit('Complement')
+    def handle_output(self, edit, region, seq_out):
+        # edit = self.view.begin_edit('Complement')
         self.view.replace(edit, region, seq_out)
-        self.view.end_edit(edit)
+        # self.view.end_edit(edit)
 
 
 class NaBaseToClip(NaBase):

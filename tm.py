@@ -2,7 +2,7 @@ import math
 
 import sublime
 
-from util import *
+from .util import *
 
 
 R = 1.9872e-3  # Gas constant (1 / kcal * mol)
@@ -18,7 +18,7 @@ def divalent_to_monovalent(divalent, dntp):
 
 
 def calc_thermo(seq, conc_nm=50, monovalent=50, divalent=0.01, dntp=0.0):
-    ''' Return the thermo parameters for DNA under specified salt cond. 
+    ''' Return the thermo parameters for DNA under specified salt cond.
 
     '''
 
@@ -28,7 +28,7 @@ def calc_thermo(seq, conc_nm=50, monovalent=50, divalent=0.01, dntp=0.0):
         'GA': 82, 'GT': 84, 'GG': 80, 'GC': 98,
         'CA': 85, 'CT': 78, 'CG': 106, 'CC': 80
     }
-    entropies = { 
+    entropies = {
         'AA': 222, 'AT': 204, 'AG': 210, 'AC': 224,
         'TA': 213, 'TT': 222, 'TG': 227, 'TC': 222,
         'GA': 222, 'GT': 224, 'GG': 199, 'GC': 244,
@@ -39,7 +39,7 @@ def calc_thermo(seq, conc_nm=50, monovalent=50, divalent=0.01, dntp=0.0):
     sym = seq == reverse_complement(seq, 'DNA')
     # Calculate NN uncorrected dS and dH for oligo
     for idx in range(len(seq)-1):
-        dH += enthalpies[seq[idx:idx+2]] 
+        dH += enthalpies[seq[idx:idx+2]]
         dS += entropies[seq[idx:idx+2]]
     # Terminal AT penalty and initiation parameters (combined)
     if seq[0] in 'AT':
@@ -70,13 +70,13 @@ def calc_thermo(seq, conc_nm=50, monovalent=50, divalent=0.01, dntp=0.0):
 
 
 def calc_tm(seq, conc_nm=50, monovalent=50, divalent=0.01, dntp=0.0):
-    _, _, tm = calc_thermo(seq, conc_nm=50, monovalent=50, divalent=0.01, 
+    _, _, tm = calc_thermo(seq, conc_nm=50, monovalent=50, divalent=0.01,
                            dntp=0.0)
     return tm
 
 
 class NaTmDefaultsCommand(NaBase):
-    
+
     def process_seq(self, seq, na_type):
         if na_type == 'RNA':
             seq = seq.translate(_RNA_TO_DNA)
@@ -90,6 +90,6 @@ class NaTmDefaultsCommand(NaBase):
                                'Monovalent []: \t50 mM\n'     +
                                'Divalent []: \t\t0.01 mM\n'   +
                                'dNTP []: \t\t0 mM')
-                               
 
-    
+
+

@@ -1,3 +1,4 @@
+
 import re
 
 import sublime, sublime_plugin
@@ -6,20 +7,13 @@ import sublime, sublime_plugin
 class SpanCommentCommand(sublime_plugin.TextCommand):
     '''
     Creates or balances a span comment at the current text cursor position.
-
     Turns:
-
     #~~~~~~~~~~~ Foo ~~~~~~~~~~~~~~~~~~~#
     Bar
-
     Into:
-
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Foo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Bar ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-
-
     Currently supports: C, Java, JavaScript, Python
-
     '''
 
     _LANGS = {
@@ -76,9 +70,7 @@ class SpanCommentCommand(sublime_plugin.TextCommand):
             text = match.group(1).strip()
         else:
             text = text.strip()
-        edit = self.view.begin_edit('Span Comment')
         self.replace(full_line, edit, text, eol_char=eol_char, pre_ws=pre_ws)
-        self.view.end_edit(edit)
 
 
     def replace(self, region, edit, text, eol_char, pre_ws):
@@ -96,7 +88,6 @@ class SpanCommentCommand(sublime_plugin.TextCommand):
 
     def get_lang_dict(self):
         cur_syntax = self.view.settings().get('syntax')
-        print cur_syntax.upper()
         for lang, lang_dict in SpanCommentCommand._LANGS.items():
             if lang in cur_syntax.upper():
                 return lang_dict

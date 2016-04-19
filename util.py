@@ -4,18 +4,21 @@ import sublime_plugin
 try:
     from string import maketrans
 except:
-    from str import maketrans
+    try:
+        from str import maketrans
+    except:
+        maketrans = str.maketrans
 
 
 __all__ = ['_DNA_COMP', '_RNA_COMP', '_NA_RE', '_DNA_RE', '_RNA_RE',
-           '_RNA_TO_DNA', 'seqQC', 'complement', 'reverse_complement', 
+           '_RNA_TO_DNA', 'seqQC', 'complement', 'reverse_complement',
            'reverse', 'NaBase']
 
 
-_DNA_COMP = maketrans('ATGCatgcKMRYSWBVHDXN.- ', 
+_DNA_COMP = maketrans('ATGCatgcKMRYSWBVHDXN.- ',
                       'TACGtacgMKYRSWVBDHXN.- ')
 
-_RNA_COMP = maketrans('AUGCaugcKMRYSWBVHDXN.- ', 
+_RNA_COMP = maketrans('AUGCaugcKMRYSWBVHDXN.- ',
                       'UACGuacgMKYRSWVBDHXN.- ')
 
 _RNA_TO_DNA = maketrans('Uu','Tt')
@@ -57,13 +60,13 @@ class NaBase(sublime_plugin.TextCommand):
         seq = str(self.view.substr(region).strip())
         na_type = seqQC(seq)
         if not na_type:
-            sublime.error_message('Selected text contains invalid DNA/RNA ' + 
+            sublime.error_message('Selected text contains invalid DNA/RNA ' +
                                   'bases. Valid bases include: \n\n' +
                                   'DNA: ATGCatgcKMRYSWBVHDXN.- \n' +
                                   'RNA: AUGCaugcKMRYSWBVHDXN.-')
         else:
             seq_out = self.process_seq(seq, na_type)
-            self.handle_output(region, seq_out)
+            self.handle_output(edit, region, seq_out)
 
 
     def handle_output(self, region, seq_out):
