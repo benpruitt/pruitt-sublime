@@ -55,6 +55,7 @@ class SpanCommentCommand(sublime_plugin.TextCommand):
                           r'\s*')
     _PRE_WS_RE = re.compile('^([ |\t]+)')
     _EOL_RE = re.compile(r'([\r|\n|\r\n])')
+    _SYNTAX_RE = re.compile('/([^\./]+)\.sublime-syntax')
 
 
     def run(self, edit):
@@ -87,11 +88,10 @@ class SpanCommentCommand(sublime_plugin.TextCommand):
 
 
     def get_lang_dict(self):
-        cur_syntax = self.view.settings().get('syntax')
-        for lang, lang_dict in SpanCommentCommand._LANGS.items():
-            if lang in cur_syntax.upper():
-                return lang_dict
-        return None
+        cur_syntax_raw  = self.view.settings().get('syntax')
+        cur_syntax_m = re.search(SpanCommentCommand._SYNTAX_RE, cur_syntax_raw)
+        if cur_syntax_m is not None:
+            return SpanCommentCommand._LANGS.get(cur_syntax_m.group(1).upper())
 
 
     def is_visible(self):
