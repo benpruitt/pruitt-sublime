@@ -22,6 +22,11 @@ class SpanCommentCommand(sublime_plugin.TextCommand):
             'R_DELIM': '*/',
             'SPACER': '~'
         },
+        'C++': {
+            'F_DELIM': '/*',
+            'R_DELIM': '*/',
+            'SPACER': '~'
+        },
         'JAVA': {
             'F_DELIM': '/*',
             'R_DELIM': '*/',
